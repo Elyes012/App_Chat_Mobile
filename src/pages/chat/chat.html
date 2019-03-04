@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Page d'accueil
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+<ion-item>
+  <ion-label stacked>Livreur/Client</ion-label>
+  <ion-input type="text" [(ngModel)]="person" name="user" placeheolder="Client/Liveur"></ion-input>
+</ion-item>
+<div class="message-wrap">
+<div *ngFor="let item of listMessage" class="message">
+
+<div class="msg-detail">
+<div class="msg-info">
+ <p>
+   {{item.user}}&nbsp;&nbsp;&nbsp;{{item.date | date:'shortTime'}}</p>
+</div>
+<div class="msg-content">
+ <p class="line-breaker ">{{item.message}}</p>
+</div>
+</div>
+</div>
+</div>
+</ion-content>
