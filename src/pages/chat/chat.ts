@@ -1,5 +1,7 @@
 import { Component,  OnInit } from '@angular/core';
 import { ApichatProvider } from '../../providers/apichat/apichat';
+import { OneSignal } from '@ionic-native/onesignal';
+
 @Component({
   selector: 'page-chat',
   templateUrl: 'chat.html'
@@ -10,17 +12,31 @@ export class ChatPage implements OnInit{
   person: string;
   invalidUser: string;
   allmsg;
-  constructor( public apiChat: ApichatProvider ) {
+  constructor( public apiChat: ApichatProvider, private oneSignal: OneSignal) {
+    this.oneSignal.startInit('353e0e1c-a069-4443-a8d0-135e90ea1377', '1056517509247');
+
+this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+
+this.oneSignal.handleNotificationReceived().subscribe(() => {
+  console.log('recevied') // do something when notification is received
+});
+
+this.oneSignal.handleNotificationOpened().subscribe(() => {
+  // do something when a notification is opened
+  console.log('unrecevied')
+});
+
+this.oneSignal.endInit();
   }
 
 
 ngOnInit() {
-  console.log('haytherm')
   this.apiChat.sendMessageSocket().subscribe(res => {
     this.getMessages();
   });
-this.allmsg = localStorage.getItem('message');
-console.log('msg', this.allmsg)
+  this.getMessages();
+
+
 }
 sendMessage() {
   const data = {
@@ -40,8 +56,8 @@ sendMessage() {
 getMessages() {
   this.apiChat.getAllmessage().subscribe(res => {
     this.listMessage = res;
-    localStorage.setItem('message', JSON.stringify(this.listMessage))
-    console.log('list message', this.listMessage);
   });
 }
+
+
 }

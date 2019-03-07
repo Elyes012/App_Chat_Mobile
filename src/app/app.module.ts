@@ -10,20 +10,26 @@ import { HttpClientModule } from '@angular/common/http'
 import { HttpModule } from '@angular/http'
 import { ApichatProvider } from '../providers/apichat/apichat';
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
+import { Network} from '@ionic-native/network';
+import { OneSignal } from '@ionic-native/onesignal';
 const config: SocketIoConfig = { url: 'http://ec2-18-233-8-147.compute-1.amazonaws.com:8700' , options: {} };
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ChatPage
+    ChatPage,
+
   ],
   imports: [
     BrowserModule,
     SocketIoModule.forRoot(config),
     IonicModule.forRoot(MyApp),
     HttpClientModule,
-    HttpModule
+    HttpModule,
+
+
+
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -35,7 +41,10 @@ const config: SocketIoConfig = { url: 'http://ec2-18-233-8-147.compute-1.amazona
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ApichatProvider
+    ApichatProvider,
+    Network,
+    OneSignal
+
   ]
 })
 export class AppModule {}
